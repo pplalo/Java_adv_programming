@@ -20,6 +20,17 @@ public class CsvReader {
             } else {
                 System.out.println("Error: The file does not exist, is not a valid file, or does not have a .csv extension.");
             }
+
+            System.out.println("/nEnter the columns to be analyzed separated by commas (e.g., column1, column2, column3):");
+
+            String selectedColumns = scanner.nextLine();
+            String[] columns = selectedColumns.split(",");
+
+            System.out.println("You have selected the next columns:");
+            for (String column : columns) {
+                System.out.println(column.trim());
+            }
+
         } catch (Exception exc) {
             System.err.println("Error: " + exc.getMessage());
         }
