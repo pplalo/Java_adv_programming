@@ -35,7 +35,7 @@ public class CsvReader {
                 System.out.println("Available columns:");
                 System.out.println("+----------------------+");
                 for (String column : columns) {
-                    System.out.printf("| %-20s |\n", column.trim().toUpperCase());
+                    System.out.printf("| %-25s |\n", column.trim().toUpperCase());
                 }
                 System.out.println("+----------------------+");
             } else {
