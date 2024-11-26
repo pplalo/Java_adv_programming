@@ -59,8 +59,8 @@ public class CsvReader {
             if (header != null) {
                 String[] columns = header.split(",");
                 System.out.println("\u001B[34mColumnas disponibles:\u001B[0m");
-                for (String column : columns) {
-                    System.out.println("- " + column.trim());
+                for (int i = 0; i < columns.length; i++) {
+                    System.out.println((i + 1) + ". " + columns[i].trim());
                 }
             } else {
                 System.out.println("\u001B[31mEl archivo CSV está vacío.\u001B[0m");
