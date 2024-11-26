@@ -89,7 +89,8 @@ public class CsvReader {
                 return;
             }
 
-            File subfilesDir = new File("subarchivos");
+            // Crear directorio para subarchivos en el directorio actual
+            File subfilesDir = new File(System.getProperty("user.dir"), "subarchivos");
             if (!subfilesDir.exists()) {
                 subfilesDir.mkdir();
             }
