@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Oa esto es main
+=======
+Hola Hermosa Bren!
+>>>>>>> 2f537e3a9cce04027a1a89e9590dd07d529374cb
