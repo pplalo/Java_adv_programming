@@ -79,50 +79,64 @@ public class Hilos {
     }
 
     private static void analyzeData(List<Double> columnData, double min, double max) {
-        double range = max - min;
+        try (Scanner scanner = new Scanner(System.in)) {
+            double range = max - min;
 
-        System.out.println("Valor máximo: " + max);
-        System.out.println("Valor mínimo: " + min);
-        System.out.println("Rango de valores: " + range);
+            System.out.println("Valor máximo: " + max);
+            System.out.println("Valor mínimo: " + min);
+            System.out.println("Rango de valores: " + range);
+            System.out.print("Ingrese el número de intervalos: ");
 
-    //     System.out.print("Ingrese el número de intervalos: ");
-    //     int numIntervals = scanner.nextInt();
-    //     double intervalLength = range / numIntervals;
+            int numIntervals = scanner.nextInt();
 
-    //     System.out.println("Intervalos:");
-    //     double start = min;
-    //     double end;
-    //     List<int[]> intervals = new ArrayList<>();
-    //     for (int i = 0; i < numIntervals; i++) {
-    //         end = start + intervalLength;
-    //         System.out.println("Intervalo " + (i + 1) + ": [" + start + ", " + end + ")");
-    //         intervals.add(new int[]{(int) start, (int) end});
-    //         start = end;
-    //     }
+            double intervalLength = getIntervals(range, numIntervals);
 
-    //     System.out.println("Frecuencia en cada intervalo:");
-    //     int[] frequencies = new int[numIntervals];
-    //     for (double value : columnData) {
-    //         int intervalIndex = (int) ((value - min) / intervalLength);
-    //         if (intervalIndex == numIntervals) {
-    //             intervalIndex--; // Ajuste para el valor máximo
-    //         }
-    //         frequencies[intervalIndex]++;
-    //     }
+            System.out.println("Intervalos:");
 
-    //     for (int i = 0; i < numIntervals; i++) {
-    //         System.out.println("Intervalo " + (i + 1) + ": " + frequencies[i] + " valores");
-    //     }
+            double start = min;
 
-    //     int mayor = frequencies[0];
-    //     int indicemax=0;
-    //     for (int i=1;i<frequencies.length;i++){
-    //         if (frequencies[i]>mayor){
-    //             mayor= frequencies[i];
-    //             indicemax=i;
-    //         }
-    //     }
-    //         System.out.println("El intervalo "+(indicemax+1)+" tiene la frecuencia mas grande");
+            List<int[]> intervals = setIntervals(start, numIntervals, intervalLength);
+
+            System.out.println("Frecuencia en cada intervalo:");
+            
+            //     int[] frequencies = new int[numIntervals];
+            //     for (double value : columnData) {
+            //         int intervalIndex = (int) ((value - min) / intervalLength);
+            //         if (intervalIndex == numIntervals) {
+            //             intervalIndex--; // Ajuste para el valor máximo
+            //         }
+            //         frequencies[intervalIndex]++;
+            //     }
+            //     for (int i = 0; i < numIntervals; i++) {
+            //         System.out.println("Intervalo " + (i + 1) + ": " + frequencies[i] + " valores");
+            //     }
+            //     int mayor = frequencies[0];
+            //     int indicemax=0;
+            //     for (int i=1;i<frequencies.length;i++){
+            //         if (frequencies[i]>mayor){
+            //             mayor= frequencies[i];
+            //             indicemax=i;
+            //         }
+            //     }
+            //         System.out.println("El intervalo "+(indicemax+1)+" tiene la frecuencia mas grande");
+        }
+    }
+    
+    private static double getIntervals(double range, int numIntervals){
+        double intervalLength = range / numIntervals;
+        return intervalLength;
+    }
+    
+    private static List<int[]> setIntervals(double start, int numIntervals, double intervalLength){
+        List<int[]> intervals = new ArrayList<>();
+        double end;
+        for (int i = 0; i < numIntervals; i++) {
+            end = start + intervalLength;
+            System.out.println("Intervalo " + (i + 1) + ": [" + start + ", " + end + ")");
+            intervals.add(new int[]{(int) start, (int) end});
+            start = end;
+        }
+        return intervals;
     }
 
     private static List<Double> readColumnData(File csvFile) throws IOException {
