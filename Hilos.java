@@ -1,9 +1,11 @@
+
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Hilos {
+
     public static void process(List<Double> columnData, int nThreads) {
         // Creamos una variable que nos permita crear el número de hilos que se ejecutarán
 
@@ -69,7 +71,7 @@ public class Hilos {
     }
 
     private static double findMin(List<Double> columnData) {
-        double max =  columnData.stream().min(Double::compare).orElse(Double.MIN_VALUE);
+        double max = columnData.stream().min(Double::compare).orElse(Double.MIN_VALUE);
         return max;
     }
 
@@ -98,36 +100,19 @@ public class Hilos {
             List<int[]> intervals = setIntervals(start, numIntervals, intervalLength);
 
             System.out.println("Frecuencia en cada intervalo:");
-            
-            //     int[] frequencies = new int[numIntervals];
-            //     for (double value : columnData) {
-            //         int intervalIndex = (int) ((value - min) / intervalLength);
-            //         if (intervalIndex == numIntervals) {
-            //             intervalIndex--; // Ajuste para el valor máximo
-            //         }
-            //         frequencies[intervalIndex]++;
-            //     }
-            //     for (int i = 0; i < numIntervals; i++) {
-            //         System.out.println("Intervalo " + (i + 1) + ": " + frequencies[i] + " valores");
-            //     }
-            //     int mayor = frequencies[0];
-            //     int indicemax=0;
-            //     for (int i=1;i<frequencies.length;i++){
-            //         if (frequencies[i]>mayor){
-            //             mayor= frequencies[i];
-            //             indicemax=i;
-            //         }
-            //     }
-            //         System.out.println("El intervalo "+(indicemax+1)+" tiene la frecuencia mas grande");
+
+            int maxFrequencyIndex = findMaxFrequencyIndex(columnData, intervalLength, numIntervals, min);
+
+            System.out.println("El intervalo " + (maxFrequencyIndex + 1) + " tiene la frecuencia mas grande");
         }
     }
-    
-    private static double getIntervals(double range, int numIntervals){
+
+    private static double getIntervals(double range, int numIntervals) {
         double intervalLength = range / numIntervals;
         return intervalLength;
     }
-    
-    private static List<int[]> setIntervals(double start, int numIntervals, double intervalLength){
+
+    private static List<int[]> setIntervals(double start, int numIntervals, double intervalLength) {
         List<int[]> intervals = new ArrayList<>();
         double end;
         for (int i = 0; i < numIntervals; i++) {
@@ -139,6 +124,29 @@ public class Hilos {
         return intervals;
     }
 
+    private static int findMaxFrequencyIndex(List<Double> columnData, double intervalLength, int numIntervals, double min) {
+        int[] frequencies = new int[numIntervals];
+        for (double value : columnData) {
+            int intervalIndex = (int) ((value - min) / intervalLength);
+            if (intervalIndex == numIntervals) {
+                intervalIndex--; // Ajuste para el valor máximo
+            }
+            frequencies[intervalIndex]++;
+        }
+        for (int i = 0; i < numIntervals; i++) {
+            System.out.println("Intervalo " + (i + 1) + ": " + frequencies[i] + " valores");
+        }
+        int mayor = frequencies[0];
+        int maxIndex = 0;
+        for (int i = 1; i < frequencies.length; i++) {
+            if (frequencies[i] > mayor) {
+                mayor = frequencies[i];
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+
     private static List<Double> readColumnData(File csvFile) throws IOException {
         List<Double> columnData = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
@@ -147,7 +155,7 @@ public class Hilos {
             while ((line = reader.readLine()) != null) {
                 if (isFirstLine) {
                     isFirstLine = false;
-                    continue; 
+                    continue;
                 }
                 String[] values = line.split(",");
                 for (String value : values) {
