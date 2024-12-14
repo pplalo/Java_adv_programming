@@ -92,8 +92,6 @@ public class CsvReader {
                 for (int i = 0; i < columns.length; i++) {
                     System.out.println((i + 1) + ". " + columns[i].trim());
                 }
-
-
             
             } else {
                 System.out.println("\u001B[31mEl archivo CSV está vacío.\u001B[0m");
@@ -155,32 +153,5 @@ public class CsvReader {
             System.err.println("\u001B[31mError al dividir el archivo: " + e.getMessage() + "\u001B[0m");
         }
     }
-
-    // // Procesar subarchivos concurrentemente
-    // private static void procesarConcurrentemente(File[] subfiles, String[] selectedColumns) {
-    //     List<Thread> workers = new ArrayList<>();
-    //     File resultDir = new File("resultados");
-    //     if (!resultDir.exists()) {
-    //         resultDir.mkdir();
-    //     }
-
-    //     for (File subfile : subfiles) {
-    //         Thread worker = new Thread(() -> procesarSubarchivo(subfile, resultDir, selectedColumns));
-    //         workers.add(worker);
-    //         worker.start();
-    //     }
-
-    //     for (Thread worker : workers) {
-    //         try {
-    //             worker.join();
-    //         } catch (InterruptedException e) {
-    //             System.err.println("\u001B[31mError esperando hilo: " + e.getMessage() + "\u001B[0m");
-    //         }
-    //     }
-    // }
-
-    
-
-
 
 }
